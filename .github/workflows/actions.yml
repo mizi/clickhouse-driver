@@ -136,6 +136,8 @@ jobs:
           # Set initial TZ for docker exec -e "`env | grep ^TZ`"
           TZ: UTC
       - name: Upload coverage
+        # coveralls<4 caps coverage<7, which cannot analyze Python 3.15.
+        if: ${{ matrix.python-version != '3.15' }}
         run: coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
